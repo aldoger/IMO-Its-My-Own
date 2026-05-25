@@ -1,0 +1,28 @@
+package controller
+
+import (
+	"imo-server-storage/src/dto"
+	"imo-server-storage/src/service"
+
+	"github.com/gin-gonic/gin"
+)
+
+type UserController struct {
+	UserService service.UserService
+}
+
+func (uc *UserController) CreateNewUser(c *gin.Context) {
+	var req dto.CreateUserRequest
+	if err := c.ShouldBindBodyWithJSON(&req); err != nil {
+		c.JSON(400, gin.H{"error": "invalid request"})
+		return
+	}
+
+	createUser, err := uc.UserService.CreateUser(c, req)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "internal server error"})
+		return
+	}
+
+	c.JSON(201, gin.H{"data": createUser})
+}

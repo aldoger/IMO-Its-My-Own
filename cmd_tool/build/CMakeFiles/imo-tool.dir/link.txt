@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/imo-tool.dir/link.d "CMakeFiles/imo-tool.dir/main.cpp.o" -o imo-tool

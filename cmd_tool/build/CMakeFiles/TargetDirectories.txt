@@ -1,0 +1,7 @@
+/home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles/imo-tool.dir
+/home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles/edit_cache.dir
+/home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles/rebuild_cache.dir
+/home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles/list_install_components.dir
+/home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles/install.dir
+/home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles/install/local.dir
+/home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles/install/strip.dir
