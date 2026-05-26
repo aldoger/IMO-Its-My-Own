@@ -1,3 +1,5 @@
+#include "send.h"
+
 #include <iostream>
 #include <string>
 #include <string_view>
@@ -5,13 +7,15 @@
 #include <functional>
 #include <vector>
 
-static constexpr std::string_view VERSION = "0.1.0";
+static constexpr std::string_view VERSION = "1.0.0";
 
 struct Args {
     std::string command;
     std::vector<std::string> positional;
     std::unordered_map<std::string, std::string> flags;
 };
+
+typedef std::function<void(const Args&)> Handler;
 
 Args parse_args(int argc, char* argv[]) {
     Args args;
@@ -33,6 +37,21 @@ Args parse_args(int argc, char* argv[]) {
     return args;
 }
 
+void cmd_hello(const Args&) {
+    Sender sender = get_hello_world();
+
+    json_object* obj = sender("https://jsonplaceholder.typicode.com/todos/1");
+
+    if (obj) {
+        std::cout << json_object_to_json_string_ext(
+            obj,
+            JSON_C_TO_STRING_PRETTY
+        ) << std::endl;
+
+        json_object_put(obj);
+    }
+}
+
 void cmd_help(const Args&) {
     std::cout << "Usage: imo-tool <command> [options]\n\n"
               << "Commands:\n"
@@ -43,16 +62,16 @@ void cmd_help(const Args&) {
 }
 
 void cmd_version(const Args&) {
-    std::cout << "imo-tool " << VERSION << "\n";
+    std::cout << "imo-cli " << VERSION << "\n";
 }
 
 int main(int argc, char* argv[]) {
     Args args = parse_args(argc, argv);
 
-    using Handler = std::function<void(const Args&)>;
     std::unordered_map<std::string, Handler> commands = {
         {"help",    cmd_help},
         {"version", cmd_version},
+        {"hello", cmd_hello}
     };
 
     if (args.command.empty() || args.command == "help") {

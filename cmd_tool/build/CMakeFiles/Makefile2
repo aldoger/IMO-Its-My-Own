@@ -63,11 +63,11 @@ CMAKE_BINARY_DIR = /home/aldoger/my-projects/go-projects/imo/cmd_tool/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/imo-tool.dir/all
+all: CMakeFiles/imo-cli.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
-codegen: CMakeFiles/imo-tool.dir/codegen
+codegen: CMakeFiles/imo-cli.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -75,40 +75,40 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/imo-tool.dir/clean
+clean: CMakeFiles/imo-cli.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/imo-tool.dir
+# Target rules for target CMakeFiles/imo-cli.dir
 
 # All Build rule for target.
-CMakeFiles/imo-tool.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-tool.dir/build.make CMakeFiles/imo-tool.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-tool.dir/build.make CMakeFiles/imo-tool.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles --progress-num=1,2 "Built target imo-tool"
-.PHONY : CMakeFiles/imo-tool.dir/all
+CMakeFiles/imo-cli.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-cli.dir/build.make CMakeFiles/imo-cli.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-cli.dir/build.make CMakeFiles/imo-cli.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles --progress-num=1,2,3 "Built target imo-cli"
+.PHONY : CMakeFiles/imo-cli.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/imo-tool.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/imo-tool.dir/all
+CMakeFiles/imo-cli.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/imo-cli.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles 0
-.PHONY : CMakeFiles/imo-tool.dir/rule
+.PHONY : CMakeFiles/imo-cli.dir/rule
 
 # Convenience name for target.
-imo-tool: CMakeFiles/imo-tool.dir/rule
-.PHONY : imo-tool
+imo-cli: CMakeFiles/imo-cli.dir/rule
+.PHONY : imo-cli
 
 # codegen rule for target.
-CMakeFiles/imo-tool.dir/codegen:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-tool.dir/build.make CMakeFiles/imo-tool.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles --progress-num=1,2 "Finished codegen for target imo-tool"
-.PHONY : CMakeFiles/imo-tool.dir/codegen
+CMakeFiles/imo-cli.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-cli.dir/build.make CMakeFiles/imo-cli.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/aldoger/my-projects/go-projects/imo/cmd_tool/build/CMakeFiles --progress-num=1,2,3 "Finished codegen for target imo-cli"
+.PHONY : CMakeFiles/imo-cli.dir/codegen
 
 # clean rule for target.
-CMakeFiles/imo-tool.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-tool.dir/build.make CMakeFiles/imo-tool.dir/clean
-.PHONY : CMakeFiles/imo-tool.dir/clean
+CMakeFiles/imo-cli.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-cli.dir/build.make CMakeFiles/imo-cli.dir/clean
+.PHONY : CMakeFiles/imo-cli.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

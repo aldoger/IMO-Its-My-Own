@@ -162,24 +162,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named imo-tool
+# Target rules for targets named imo-cli
 
 # Build rule for target.
-imo-tool: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 imo-tool
-.PHONY : imo-tool
+imo-cli: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 imo-cli
+.PHONY : imo-cli
 
 # fast build rule for target.
-imo-tool/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-tool.dir/build.make CMakeFiles/imo-tool.dir/build
-.PHONY : imo-tool/fast
+imo-cli/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-cli.dir/build.make CMakeFiles/imo-cli.dir/build
+.PHONY : imo-cli/fast
 
 main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-tool.dir/build.make CMakeFiles/imo-tool.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-cli.dir/build.make CMakeFiles/imo-cli.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -187,7 +187,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-tool.dir/build.make CMakeFiles/imo-tool.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-cli.dir/build.make CMakeFiles/imo-cli.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -195,8 +195,32 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-tool.dir/build.make CMakeFiles/imo-tool.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-cli.dir/build.make CMakeFiles/imo-cli.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+send.o: send.cpp.o
+.PHONY : send.o
+
+# target to build an object file
+send.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-cli.dir/build.make CMakeFiles/imo-cli.dir/send.cpp.o
+.PHONY : send.cpp.o
+
+send.i: send.cpp.i
+.PHONY : send.i
+
+# target to preprocess a source file
+send.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-cli.dir/build.make CMakeFiles/imo-cli.dir/send.cpp.i
+.PHONY : send.cpp.i
+
+send.s: send.cpp.s
+.PHONY : send.s
+
+# target to generate assembly for a file
+send.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imo-cli.dir/build.make CMakeFiles/imo-cli.dir/send.cpp.s
+.PHONY : send.cpp.s
 
 # Help Target
 help:
@@ -210,10 +234,13 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... imo-tool"
+	@echo "... imo-cli"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... send.o"
+	@echo "... send.i"
+	@echo "... send.s"
 .PHONY : help
 
 

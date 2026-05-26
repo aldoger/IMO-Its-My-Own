@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/aldoger/my-projects/go-projects/imo/cmd_tool/build",
+  "command": "/usr/bin/c++  -I/home/aldoger/my-projects/go-projects/imo/cmd_tool/include -I/usr/include/json-c -std=gnu++20 -o CMakeFiles/imo-cli.dir/main.cpp.o -c /home/aldoger/my-projects/go-projects/imo/cmd_tool/main.cpp",
+  "file": "/home/aldoger/my-projects/go-projects/imo/cmd_tool/main.cpp",
+  "output": "CMakeFiles/imo-cli.dir/main.cpp.o"
+},
+{
+  "directory": "/home/aldoger/my-projects/go-projects/imo/cmd_tool/build",
+  "command": "/usr/bin/c++  -I/home/aldoger/my-projects/go-projects/imo/cmd_tool/include -I/usr/include/json-c -std=gnu++20 -o CMakeFiles/imo-cli.dir/send.cpp.o -c /home/aldoger/my-projects/go-projects/imo/cmd_tool/send.cpp",
+  "file": "/home/aldoger/my-projects/go-projects/imo/cmd_tool/send.cpp",
+  "output": "CMakeFiles/imo-cli.dir/send.cpp.o"
+}
+]

@@ -8,8 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/aldoger/my-projects/go-projects/imo/cmd_tool/main.cpp" "CMakeFiles/imo-tool.dir/main.cpp.o" "gcc" "CMakeFiles/imo-tool.dir/main.cpp.o.d"
-  "" "imo-tool" "gcc" "CMakeFiles/imo-tool.dir/link.d"
+  "/home/aldoger/my-projects/go-projects/imo/cmd_tool/main.cpp" "CMakeFiles/imo-cli.dir/main.cpp.o" "gcc" "CMakeFiles/imo-cli.dir/main.cpp.o.d"
+  "/home/aldoger/my-projects/go-projects/imo/cmd_tool/send.cpp" "CMakeFiles/imo-cli.dir/send.cpp.o" "gcc" "CMakeFiles/imo-cli.dir/send.cpp.o.d"
+  "" "imo-cli" "gcc" "CMakeFiles/imo-cli.dir/link.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
