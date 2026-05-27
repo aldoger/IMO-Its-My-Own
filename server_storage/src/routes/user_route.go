@@ -7,7 +7,7 @@ import (
 )
 
 func User(c *gin.Engine, userController controller.UserController) {
-	routes := c.Group("/user")
+	routes := c.Group("/api/user")
 	{
 		routes.POST("/register", userController.CreateNewUser)
 	}
