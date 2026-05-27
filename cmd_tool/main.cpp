@@ -37,10 +37,10 @@ Args parse_args(int argc, char* argv[]) {
     return args;
 }
 
-void cmd_hello(const Args&) {
-    Sender sender = get_hello_world();
+void cmd_hello_from_imo(const Args&) {
+    Sender sender = get_hello_from_imo();
 
-    json_object* obj = sender("https://jsonplaceholder.typicode.com/todos/1");
+    json_object* obj = sender("http://localhost:8080/api/hello");
 
     if (obj) {
         std::cout << json_object_to_json_string_ext(
@@ -49,6 +49,34 @@ void cmd_hello(const Args&) {
         ) << std::endl;
 
         json_object_put(obj);
+    } else {
+        std::cout << "Server may be down, try again later" << std::endl;
+    }
+}
+
+void cmd_register(const Args& args) {
+    auto it = args.flags.find("username");
+
+    if (it == args.flags.end()) {
+        std::cout << "username not found" << std::endl;
+        return;
+    }
+
+    std::string username = it->second;
+
+    Sender sender = register_new_user(&username);
+
+    json_object* obj = sender("http://localhost:8080/api/user/register");
+
+    if (obj) {
+        std::cout << json_object_to_json_string_ext(
+            obj,
+            JSON_C_TO_STRING_PRETTY
+        ) << std::endl;
+
+        json_object_put(obj);
+    } else {
+        std::cout << "Server may be down, try again later" << std::endl;
     }
 }
 
@@ -57,6 +85,7 @@ void cmd_help(const Args&) {
               << "Commands:\n"
               << "  help     Show this help message\n"
               << "  version  Show version\n"
+              << "  hello    Test send request to imo server"
               << "\nOptions:\n"
               << "  --<key> <value>   Pass a named flag\n";
 }
@@ -71,7 +100,8 @@ int main(int argc, char* argv[]) {
     std::unordered_map<std::string, Handler> commands = {
         {"help",    cmd_help},
         {"version", cmd_version},
-        {"hello", cmd_hello}
+        {"hello", cmd_hello_from_imo},
+        {"register", cmd_register}
     };
 
     if (args.command.empty() || args.command == "help") {

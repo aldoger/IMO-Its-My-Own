@@ -26,3 +26,7 @@ func (uc *UserController) CreateNewUser(c *gin.Context) {
 
 	c.JSON(201, gin.H{"data": createUser})
 }
+
+func NewUserController(userService service.UserService) UserController {
+	return UserController{UserService: userService}
+}

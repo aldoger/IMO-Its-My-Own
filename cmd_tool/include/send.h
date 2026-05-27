@@ -7,6 +7,7 @@
 
 typedef std::function<json_object*(std::string_view path)> Sender;
 
-Sender get_hello_world();
+Sender get_hello_from_imo();
+Sender register_new_user(std::string *username);
 
 #endif

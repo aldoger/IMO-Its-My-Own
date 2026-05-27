@@ -23,3 +23,7 @@ func (us *UserService) CreateUser(ctx context.Context, userData dto.CreateUserRe
 		ID: userID.ID.String(),
 	}, nil
 }
+
+func NewUserService(userRepo repo.UserRepo) UserService {
+	return UserService{UserRepo: userRepo}
+}
