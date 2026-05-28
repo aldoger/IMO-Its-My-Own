@@ -14,6 +14,7 @@ pkg_check_modules(JSONC REQUIRED json-c)
 add_executable(imo-cli
     main.cpp
     send.cpp
+    configure.cpp
 )
 
 target_include_directories(imo-cli

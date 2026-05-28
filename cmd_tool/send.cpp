@@ -1,4 +1,4 @@
-#include "send.h"
+#include "send.hpp"
 
 #include <curl/curl.h>
 #include <string>
@@ -84,4 +84,8 @@ Sender get_hello_from_imo() {
 
         return json_tokener_parse(response.c_str());
     };
+}
+
+Sender upload_my_file(std::string *filePath) {
+    
 }
