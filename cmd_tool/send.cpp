@@ -1,4 +1,5 @@
 #include "send.hpp"
+#include "configure.hpp"
 
 #include <curl/curl.h>
 #include <string>
@@ -8,7 +9,7 @@ static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* use
     return size * nmemb;
 }
 
-Sender register_new_user(std::string* username) {
+Sender register_new_user(const std::string& username) {
     return [username](std::string_view path) -> json_object* {
         CURL* curl = curl_easy_init();
 
@@ -28,7 +29,7 @@ Sender register_new_user(std::string* username) {
         json_object_object_add(
             root,
             "username",
-            json_object_new_string(username->c_str())
+            json_object_new_string(username.c_str())
         );
 
         const char* json_string =
@@ -86,6 +87,72 @@ Sender get_hello_from_imo() {
     };
 }
 
-Sender upload_my_file(std::string *filePath) {
-    
+Sender upload_my_file(const std::string& filePath) {
+    std::string user_id = get_config_user_id();
+
+    if (user_id.empty()) {
+        return nullptr;
+    }
+
+    return [filePath, user_id](std::string_view path) -> json_object* {
+        CURL* curl = curl_easy_init();
+
+        if (!curl) {
+            return nullptr;
+        }
+
+        std::string response;
+        std::string url(path);
+
+        curl_mime* mime = curl_mime_init(curl);
+
+        if (!mime) {
+            curl_easy_cleanup(curl);
+            return nullptr;
+        }
+
+        curl_mimepart* part =
+            curl_mime_addpart(mime);
+
+        curl_mime_name(part, "file");
+        curl_mime_filedata(part, filePath.c_str());
+
+        part = curl_mime_addpart(mime);
+
+        curl_mime_name(part, "user_id");
+        curl_mime_data(
+            part,
+            user_id.c_str(),
+            CURL_ZERO_TERMINATED
+        );
+
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_MIMEPOST, mime);
+
+        curl_easy_setopt(
+            curl,
+            CURLOPT_WRITEFUNCTION,
+            WriteCallback
+        );
+
+        curl_easy_setopt(
+            curl,
+            CURLOPT_WRITEDATA,
+            &response
+        );
+
+        CURLcode res = curl_easy_perform(curl);
+
+        json_object* result = nullptr;
+
+        if (res == CURLE_OK) {
+            result =
+                json_tokener_parse(response.c_str());
+        }
+
+        curl_mime_free(mime);
+        curl_easy_cleanup(curl);
+
+        return result;
+    };
 }

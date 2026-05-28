@@ -39,3 +39,48 @@ void create_config_json(const std::string& user_id) {
     file << json_str;
     json_object_put(root);
 }
+
+std::string get_config_user_id() {
+    if (!is_config_dir_exist()) {
+        create_config_dir();
+
+        std::cerr
+            << "please register first before uploading your files"
+            << std::endl;
+
+        return "";
+    }
+
+    std::string path = get_config_dir() + "/config.json";
+
+    json_object* root = json_object_from_file(path.c_str());
+
+    if (root == nullptr) {
+        std::cerr << "Failed to parse JSON\n";
+        return "";
+    }
+
+    json_object* userIdObj;
+
+    if (!json_object_object_get_ex(
+            root,
+            "user_id",
+            &userIdObj
+        )) {
+
+        std::cerr << "user_id not found\n";
+
+        json_object_put(root);
+        return "";
+    }
+
+    const char* user_id =
+        json_object_get_string(userIdObj);
+
+    std::string result =
+        user_id ? user_id : "";
+
+    json_object_put(root);
+
+    return result;
+}

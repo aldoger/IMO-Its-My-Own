@@ -28,5 +28,6 @@ inline std::string get_config_dir() {
 bool is_config_dir_exist();
 void create_config_dir();
 void create_config_json(const std::string& user_id);
+std::string get_config_user_id();
 
 #endif
