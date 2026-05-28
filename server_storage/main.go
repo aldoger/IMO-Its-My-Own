@@ -2,10 +2,12 @@ package main
 
 import (
 	"imo-server-storage/src/config"
+	"imo-server-storage/src/db"
 )
 
 func main() {
-	// TODO: initialize *gorm.DB here (e.g. gorm.Open with your driver)
-	eng := config.Config(nil)
+	database := db.New()
+
+	eng := config.Config(database)
 	eng.Run(":8080")
 }
