@@ -59,6 +59,9 @@ void cmd_register(const Args& args) {
 
     if(!is_config_dir_exist()) {
         create_config_dir();
+        std::cout << "configuration directory created at " << get_config_dir() << ", you can register now" << std::endl;
+        std::cout << "please don't edit configuration files manually" << std::endl;
+        return;
     }else{
         std::string user_id = get_config_user_id();
         if(user_id != "") {
