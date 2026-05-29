@@ -1,4 +1,5 @@
 #include "send.hpp"
+#include "configure.hpp"
 
 #include <iostream>
 #include <string>
@@ -55,6 +56,17 @@ void cmd_hello_from_imo(const Args&) {
 }
 
 void cmd_register(const Args& args) {
+
+    if(!is_config_dir_exist()) {
+        create_config_dir();
+    }else{
+        std::string user_id = get_config_user_id();
+        if(user_id != "") {
+            std::cerr << "you already have an account, no need to register" << std::endl;
+            return;
+        }
+    }
+
     auto it = args.flags.find("username");
 
     if (it == args.flags.end()) {
@@ -64,7 +76,7 @@ void cmd_register(const Args& args) {
 
     std::string username = it->second;
 
-    Sender sender = register_new_user(&username);
+    Sender sender = register_new_user(username);
 
     json_object* obj = sender("http://localhost:8080/api/user/register");
 
@@ -73,6 +85,18 @@ void cmd_register(const Args& args) {
             obj,
             JSON_C_TO_STRING_PRETTY
         ) << std::endl;
+
+        json_object* data_obj;
+        if (json_object_object_get_ex(obj, "data", &data_obj)) {
+
+            json_object* id_obj;
+            if (json_object_object_get_ex(data_obj, "id", &id_obj)) {
+
+                const char* id = json_object_get_string(id_obj);
+
+                create_config_json(id);
+            }
+        }
 
         json_object_put(obj);
     } else {
