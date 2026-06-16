@@ -2,6 +2,7 @@
 #include "configure.hpp"
 
 #include <iostream>
+#include <iterator>
 #include <string>
 #include <string_view>
 #include <unordered_map>
@@ -107,12 +108,36 @@ void cmd_register(const Args& args) {
     }
 }
 
+void cmd_upload_file(const Args& args) {
+
+    if(!is_config_dir_exist()) {
+        create_config_dir();
+        std::cout << "configuration directory created at " << get_config_dir() << ", you need to register first" << std::endl;
+        std::cout << "please don't edit configuration files manually" << std::endl;
+        return;
+    }
+
+    std::string user_id = get_config_user_id();
+
+    if(user_id == "") {
+        std::cout << "please register first\n" << std::endl;
+        return;
+    }
+
+    auto it = args.flags.find("file");
+
+    std::cout << "file path: " << it->second << std::endl;
+
+    return;
+}
+
 void cmd_help(const Args&) {
     std::cout << "Usage: imo-tool <command> [options]\n\n"
               << "Commands:\n"
               << "  help     Show this help message\n"
               << "  version  Show version\n"
               << "  hello    Test send request to imo server"
+              << "  upload   upload file to server"
               << "\nOptions:\n"
               << "  --<key> <value>   Pass a named flag\n";
 }
@@ -128,7 +153,8 @@ int main(int argc, char* argv[]) {
         {"help",    cmd_help},
         {"version", cmd_version},
         {"hello", cmd_hello_from_imo},
-        {"register", cmd_register}
+        {"register", cmd_register},
+        {"upload", cmd_upload_file},
     };
 
     if (args.command.empty() || args.command == "help") {
