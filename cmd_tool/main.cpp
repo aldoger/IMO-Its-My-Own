@@ -125,21 +125,34 @@ void cmd_upload_file(const Args& args) {
         return;
     }
 
-    auto it = args.flags.find("file");
+    auto fileIt = args.flags.find("file");
 
-    if (it == args.flags.end()) {
+    if (fileIt == args.flags.end()) {
         std::cout << "please provide the file path" << std::endl;
         return;
     }
 
-    if(it->second == "empty") {
+    if(fileIt->second == "empty") {
         std::cout << "please provide the file path" << std::endl;
         return;
     }
 
-    std::string file_path = it->second;
+    auto nameIt = args.flags.find("name");
 
-    Sender sender = upload_my_file(file_path);
+    if (nameIt == args.flags.end()) {
+        std::cout << "please provide the file name" << std::endl;
+        return;
+    }
+
+    if(nameIt->second == "empty") {
+        std::cout << "please provide the file name" << std::endl;
+        return;
+    }
+
+    std::string filePath = fileIt->second;
+    std::string fileName = nameIt->second;
+
+    Sender sender = upload_my_file(filePath, fileName);
 
     json_object* obj = sender("http://localhost:8080/api/file/save");
 
