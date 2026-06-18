@@ -87,14 +87,14 @@ Sender get_hello_from_imo() {
     };
 }
 
-Sender upload_my_file(const std::string& filePath) {
+Sender upload_my_file(const std::string& filePath, const std::string& fileName) {
     std::string user_id = get_config_user_id();
 
     if (user_id.empty()) {
         return nullptr;
     }
 
-    return [filePath, user_id](std::string_view path) -> json_object* {
+    return [filePath, user_id, fileName](std::string_view path) -> json_object* {
         CURL* curl = curl_easy_init();
 
         if (!curl) {
@@ -123,6 +123,13 @@ Sender upload_my_file(const std::string& filePath) {
         curl_mime_data(
             part,
             user_id.c_str(),
+            CURL_ZERO_TERMINATED
+        );
+
+        curl_mime_name(part, "file_name");
+        curl_mime_data(
+            part,
+            fileName.c_str(),
             CURL_ZERO_TERMINATED
         );
 
