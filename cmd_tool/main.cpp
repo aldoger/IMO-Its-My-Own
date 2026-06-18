@@ -1,3 +1,4 @@
+#include "json_types.h"
 #include "send.hpp"
 #include "configure.hpp"
 
@@ -8,6 +9,8 @@
 #include <unordered_map>
 #include <functional>
 #include <vector>
+
+#define EMPTY "empty"
 
 static constexpr std::string_view VERSION = "1.0.0";
 
@@ -28,7 +31,7 @@ Args parse_args(int argc, char* argv[]) {
             if (i + 1 < argc && argv[i + 1][0] != '-') {
                 args.flags[key] = argv[++i];
             } else {
-                args.flags[key] = "true";
+                args.flags[key] = "empty";
             }
         } else if (args.command.empty()) {
             args.command = arg;
@@ -74,11 +77,16 @@ void cmd_register(const Args& args) {
     auto it = args.flags.find("username");
 
     if (it == args.flags.end()) {
-        std::cout << "username not found" << std::endl;
+        std::cout << "please provide your username" << std::endl;
         return;
     }
 
     std::string username = it->second;
+
+    if(username == "empty") {
+        std::cout << "please provide your username" << std::endl;
+        return;
+    }
 
     Sender sender = register_new_user(username);
 
@@ -117,16 +125,29 @@ void cmd_upload_file(const Args& args) {
         return;
     }
 
-    std::string user_id = get_config_user_id();
+    auto it = args.flags.find("file");
 
-    if(user_id == "") {
-        std::cout << "please register first\n" << std::endl;
+    if (it == args.flags.end()) {
+        std::cout << "please provide the file path" << std::endl;
         return;
     }
 
-    auto it = args.flags.find("file");
+    if(it->second == "empty") {
+        std::cout << "please provide the file path" << std::endl;
+        return;
+    }
 
-    std::cout << "file path: " << it->second << std::endl;
+    std::string file_path = it->second;
+
+    Sender sender = upload_my_file(file_path);
+
+    json_object* obj = sender("http://localhost:8080/api/file/save");
+
+    if(obj) {
+        std::cout << "file saved" << std::endl;
+    }else{
+        std::cout << "Server may be down, try again later" << std::endl;
+    }
 
     return;
 }
