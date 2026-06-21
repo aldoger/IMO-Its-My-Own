@@ -14,8 +14,8 @@ func Config(db *gorm.DB) *gin.Engine {
 	eng := gin.Default()
 
 	userRepo := repo.NewUserRepo(db)
-	userService := service.NewUserService(userRepo)
-	userController := controller.NewUserController(userService)
+	userService := service.NewUserService(&userRepo)
+	userController := controller.NewUserController(&userService)
 
 	routes.Hello(eng)
 	routes.User(eng, userController)

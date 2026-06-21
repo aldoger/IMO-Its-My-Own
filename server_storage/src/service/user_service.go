@@ -8,7 +8,11 @@ import (
 )
 
 type UserService struct {
-	UserRepo repo.UserRepo
+	UserRepo *repo.UserRepo
+}
+
+func NewUserService(userRepo *repo.UserRepo) UserService {
+	return UserService{UserRepo: userRepo}
 }
 
 func (us *UserService) CreateUser(ctx context.Context, userData dto.CreateUserRequest) (dto.CreateUserResponse, error) {
@@ -22,8 +26,4 @@ func (us *UserService) CreateUser(ctx context.Context, userData dto.CreateUserRe
 	return dto.CreateUserResponse{
 		ID: userID.ID.String(),
 	}, nil
-}
-
-func NewUserService(userRepo repo.UserRepo) UserService {
-	return UserService{UserRepo: userRepo}
 }

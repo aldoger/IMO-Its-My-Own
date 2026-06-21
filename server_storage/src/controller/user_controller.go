@@ -8,7 +8,11 @@ import (
 )
 
 type UserController struct {
-	UserService service.UserService
+	UserService *service.UserService
+}
+
+func NewUserController(userService *service.UserService) UserController {
+	return UserController{UserService: userService}
 }
 
 func (uc *UserController) CreateNewUser(c *gin.Context) {
@@ -25,8 +29,4 @@ func (uc *UserController) CreateNewUser(c *gin.Context) {
 	}
 
 	c.JSON(201, gin.H{"data": createUser})
-}
-
-func NewUserController(userService service.UserService) UserController {
-	return UserController{UserService: userService}
 }

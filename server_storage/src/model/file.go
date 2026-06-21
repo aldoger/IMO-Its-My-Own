@@ -17,6 +17,14 @@ func (u *File) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
 
+func NewFile(userID uuid.UUID, fileName string, size uint) File {
+	return File{
+		OwnerID:  userID,
+		Filename: fileName,
+		Size:     size,
+	}
+}
+
 func (u *File) ChangeOwner(ownerID uuid.UUID) {
 	u.OwnerID = ownerID
 }
