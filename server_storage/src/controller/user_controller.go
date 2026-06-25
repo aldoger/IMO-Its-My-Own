@@ -8,11 +8,11 @@ import (
 )
 
 type UserController struct {
-	UserService *service.UserService
+	userService *service.UserService
 }
 
 func NewUserController(userService *service.UserService) UserController {
-	return UserController{UserService: userService}
+	return UserController{userService: userService}
 }
 
 func (uc *UserController) CreateNewUser(c *gin.Context) {
@@ -22,7 +22,7 @@ func (uc *UserController) CreateNewUser(c *gin.Context) {
 		return
 	}
 
-	createUser, err := uc.UserService.CreateUser(c, req)
+	createUser, err := uc.userService.CreateUser(c, req)
 	if err != nil {
 		c.JSON(500, gin.H{"error": "internal server error"})
 		return

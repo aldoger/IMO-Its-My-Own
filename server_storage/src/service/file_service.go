@@ -37,5 +37,9 @@ func (s *FileService) Upload(ctx context.Context, fileData *dto.UploadFileReques
 		return s.fileRepo.AddFile(ctx, nil, file)
 	})
 
-	return g.Wait()
+	if err := g.Wait(); err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -13,6 +13,8 @@ import (
 func Config(db *gorm.DB) *gin.Engine {
 	eng := gin.Default()
 
+	eng.MaxMultipartMemory = 8 << 20
+
 	userRepo := repo.NewUserRepo(db)
 	userService := service.NewUserService(&userRepo)
 	userController := controller.NewUserController(&userService)
