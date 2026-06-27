@@ -10,6 +10,8 @@ type File struct {
 	OwnerID  uuid.UUID `json:"owner_id"`
 	Filename string    `json:"filename"`
 	Size     uint      `json:"size"`
+
+	Owner User `gorm:"foreignKey:OwnerID;references:ID"`
 }
 
 func (u *File) BeforeCreate(tx *gorm.DB) (err error) {
