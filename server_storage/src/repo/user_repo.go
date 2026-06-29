@@ -26,3 +26,16 @@ func (ur *UserRepo) CreateUser(ctx context.Context, tx *gorm.DB, user model.User
 
 	return user, nil
 }
+
+func (r *UserRepo) FindUserByUserName(ctx context.Context, tx *gorm.DB, userName string) (string, error) {
+	if tx == nil {
+		tx = r.db
+	}
+
+	var user model.User
+	if err := tx.WithContext(ctx).Select("id").First(&user, "username = ?", userName).Error; err != nil {
+		return "", err
+	}
+
+	return user.ID.String(), nil
+}

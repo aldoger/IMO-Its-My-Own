@@ -19,3 +19,10 @@ func (s *Share) BeforeCreate(tx *gorm.DB) (err error) {
 	s.ID = uuid.New()
 	return
 }
+
+func NewShare(fileId, targetUserId uuid.UUID) Share {
+	return Share{
+		FileID:     fileId,
+		SharedToID: targetUserId,
+	}
+}

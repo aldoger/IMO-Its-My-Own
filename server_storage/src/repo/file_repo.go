@@ -28,6 +28,19 @@ func (r *FileRepo) AddFile(ctx context.Context, tx *gorm.DB, file model.File) er
 	return nil
 }
 
+func (r *FileRepo) GetFileByName(ctx context.Context, tx *gorm.DB, fileName string) (string, error) {
+	if tx == nil {
+		tx = r.db
+	}
+
+	var file model.File
+	if err := tx.WithContext(ctx).Select("id").First(&file, "filename = ?", fileName).Error; err != nil {
+		return "", err
+	}
+
+	return file.ID.String(), nil
+}
+
 func (r *FileRepo) Delete(ctx context.Context, tx *gorm.DB, fileId uuid.UUID) error {
 	if tx == nil {
 		tx = r.db
