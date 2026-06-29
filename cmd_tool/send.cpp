@@ -163,3 +163,184 @@ Sender upload_my_file(const std::string& filePath, const std::string& fileName) 
         return result;
     };
 }
+
+Sender download_my_file(const std::string& filePath, const std::string& fileName) {
+    std::string user_id = get_config_user_id();
+
+    if (user_id.empty()) {
+        return nullptr;
+    }
+
+    return [filePath, user_id, fileName](std::string_view path) -> json_object* {
+        CURL* curl = curl_easy_init();
+
+        if (!curl) {
+            return nullptr;
+        }
+
+        std::string response;
+        std::string url(path);
+
+        json_object* body = json_object_new_object();
+        json_object_object_add(body, "user_id", json_object_new_string(user_id.c_str()));
+        json_object_object_add(body, "file_name", json_object_new_string(fileName.c_str()));
+        const char* body_str = json_object_to_json_string(body);
+
+        struct curl_slist* headers = nullptr;
+        headers = curl_slist_append(headers, "Content-Type: application/json");
+
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body_str);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+        CURLcode res = curl_easy_perform(curl);
+
+        json_object* result = nullptr;
+
+        if (res == CURLE_OK) {
+            result = json_tokener_parse(response.c_str());
+        }
+
+        json_object_put(body);
+        curl_slist_free_all(headers);
+        curl_easy_cleanup(curl);
+
+        return result;
+    };
+}
+
+Sender delete_my_file(const std::string& fileName) {
+    std::string user_id = get_config_user_id();
+
+    if (user_id.empty()) {
+        return nullptr;
+    }
+
+    return [user_id, fileName](std::string_view path) -> json_object* {
+        CURL* curl = curl_easy_init();
+
+        if (!curl) {
+            return nullptr;
+        }
+
+        std::string response;
+        std::string url(path);
+
+        json_object* body = json_object_new_object();
+        json_object_object_add(body, "user_id", json_object_new_string(user_id.c_str()));
+        json_object_object_add(body, "file_name", json_object_new_string(fileName.c_str()));
+        const char* body_str = json_object_to_json_string(body);
+
+        struct curl_slist* headers = nullptr;
+        headers = curl_slist_append(headers, "Content-Type: application/json");
+
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body_str);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+        CURLcode res = curl_easy_perform(curl);
+
+        json_object* result = nullptr;
+
+        if (res == CURLE_OK) {
+            result = json_tokener_parse(response.c_str());
+        }
+
+        json_object_put(body);
+        curl_slist_free_all(headers);
+        curl_easy_cleanup(curl);
+
+        return result;
+    };
+}
+
+Sender get_my_file_list() {
+    std::string user_id = get_config_user_id();
+
+    if (user_id.empty()) {
+        return nullptr;
+    }
+
+    return [user_id](std::string_view path) -> json_object* {
+        CURL* curl = curl_easy_init();
+
+        if (!curl) {
+            return nullptr;
+        }
+
+        std::string response;
+        std::string url(path);
+
+        json_object* body = json_object_new_object();
+        json_object_object_add(body, "user_id", json_object_new_string(user_id.c_str()));
+        const char* body_str = json_object_to_json_string(body);
+
+        struct curl_slist* headers = nullptr;
+        headers = curl_slist_append(headers, "Content-Type: application/json");
+
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body_str);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+        CURLcode res = curl_easy_perform(curl);
+
+        json_object* result = nullptr;
+
+        if (res == CURLE_OK) {
+            result = json_tokener_parse(response.c_str());
+        }
+
+        json_object_put(body);
+        curl_slist_free_all(headers);
+        curl_easy_cleanup(curl);
+
+        return result;
+    };
+}
+
+Sender share_my_file_with_user(const std::string& fileName, const std::string& targetUserName) {
+    return [fileName, targetUserName](std::string_view path) -> json_object* {
+        CURL* curl = curl_easy_init();
+
+        if (!curl) {
+            return nullptr;
+        }
+
+        std::string response;
+        std::string url(path);
+
+        json_object* body = json_object_new_object();
+        json_object_object_add(body, "file_name", json_object_new_string(fileName.c_str()));
+        json_object_object_add(body, "target_user_name", json_object_new_string(targetUserName.c_str()));
+        const char* body_str = json_object_to_json_string(body);
+
+        struct curl_slist* headers = nullptr;
+        headers = curl_slist_append(headers, "Content-Type: application/json");
+
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body_str);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+        CURLcode res = curl_easy_perform(curl);
+
+        json_object* result = nullptr;
+
+        if (res == CURLE_OK) {
+            result = json_tokener_parse(response.c_str());
+        }
+
+        json_object_put(body);
+        curl_slist_free_all(headers);
+        curl_easy_cleanup(curl);
+
+        return result;
+    };
+}

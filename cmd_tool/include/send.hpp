@@ -10,5 +10,9 @@ typedef std::function<json_object*(std::string_view path)> Sender;
 Sender get_hello_from_imo();
 Sender register_new_user(const std::string& username);
 Sender upload_my_file(const std::string& filePath, const std::string& fileName);
+Sender download_my_file(const std::string& filePath, const std::string& fileName);
+Sender delete_my_file(const std::string& fileName);
+Sender get_my_file_list();
+Sender share_my_file_with_user(const std::string& fileName, const std::string& targetUserName);
 
 #endif
