@@ -15,18 +15,20 @@ void create_config_dir() {
     try {
         fs::create_directories(dir);
 
-        std::ofstream file;
-
-        file.open("config.json");
-
-        if(!file.is_open()){
-            std::cout << "Error in creating config file!" << std::endl;
+        std::string filePath = dir + "/config.json";
+        std::ofstream configFile(filePath);
+        if (!configFile.is_open()) {
+            std::cerr << "Error: could not create config file at " << filePath << std::endl;
             return;
         }
 
-        std::string filePath { dir + "/config.json" };
+        json_object* root = json_object_new_object();
+        const char* json_str = json_object_to_json_string_ext(root, JSON_C_TO_STRING_PRETTY);
+        configFile << json_str;
+        configFile.close();
+        json_object_put(root);
 
-        std::cout << "file config in directory: " << filePath << " created" << std::endl;
+        std::cout << "Config file created at: " << filePath << std::endl;
     }
     catch (const fs::filesystem_error& e) {
         std::cerr << e.what() << '\n';
