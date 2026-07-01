@@ -15,9 +15,9 @@ func NewUserRepo(db *gorm.DB) UserRepo {
 	return UserRepo{db: db}
 }
 
-func (ur *UserRepo) CreateUser(ctx context.Context, tx *gorm.DB, user model.User) (model.User, error) {
+func (r *UserRepo) CreateUser(ctx context.Context, tx *gorm.DB, user model.User) (model.User, error) {
 	if tx == nil {
-		tx = ur.db
+		tx = r.db
 	}
 
 	if err := tx.Create(user).Error; err != nil {

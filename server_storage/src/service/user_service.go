@@ -15,10 +15,10 @@ func NewUserService(userRepo *repo.UserRepo) UserService {
 	return UserService{userRepo: userRepo}
 }
 
-func (us *UserService) CreateUser(ctx context.Context, userData dto.CreateUserRequest) (dto.CreateUserResponse, error) {
+func (s *UserService) CreateUser(ctx context.Context, userData dto.CreateUserRequest) (dto.CreateUserResponse, error) {
 	newUser := model.NewUser(userData.Username)
 
-	userID, err := us.userRepo.CreateUser(ctx, nil, newUser)
+	userID, err := s.userRepo.CreateUser(ctx, nil, newUser)
 	if err != nil {
 		return dto.CreateUserResponse{}, err
 	}
