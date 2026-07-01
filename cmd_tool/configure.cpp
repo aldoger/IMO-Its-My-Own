@@ -82,8 +82,6 @@ std::string get_config_user_id() {
             &userIdObj
         )) {
 
-        std::cerr << "user_id not found\n";
-
         json_object_put(root);
         return "";
     }
